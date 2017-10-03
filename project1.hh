@@ -30,9 +30,8 @@ bool load_words(string_vector& words, const std::string& path) {
 	}
 	while (!text_input.eof()) {
 		std::string word_input;
-		getline(text_input, word_input, '\'');
-		std::string string_input = word_input.substr(word_input.find_last_of("\n") + 1);
-		words.push_back(string_input);
+		getline(text_input, word_input);
+		words.push_back(word_input);
 	}
 	text_input.close();
 	return true;
@@ -53,7 +52,7 @@ bool is_mirrored(const std::string& string1, const std::string& string2) {
 	size_t beg = 0;
 	size_t end = 0;
 	if (string1.length() > string2.length()) {
-		end = string1.length() - 1;
+		end = string1.length();
 	}
 	else {
 		end = string2.length() - 1;
