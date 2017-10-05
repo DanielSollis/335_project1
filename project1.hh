@@ -34,6 +34,7 @@ bool load_words(string_vector& words, const std::string& path) {
 		words.push_back(word_input);
 	}
 	text_input.close();
+	words.pop_back();
 	return true;
 }
 
@@ -45,19 +46,12 @@ bool load_words(string_vector& words, const std::string& path) {
 // function should be in-place, meaning that it only examines string1
 // and string2 and never creates another string object.
 bool is_mirrored(const std::string& string1, const std::string& string2) {
-	if (string1 == string2) {
+	if (string1 == string2 || string1.length() != string2.length()) {
 		return false;
 	}
-
 	size_t beg = 0;
-	size_t end = 0;
-	if (string1.length() > string2.length()) {
-		end = string1.length();
-	}
-	else {
-		end = string2.length() - 1;
-	}
-	for (beg, end; end > 0; end--) {
+	size_t end = string1.length() - 1;
+	for (beg, end; beg < string1.length(); end--, beg++) {
 		if (string1.at(beg) != string2.at(end)) {
 			return false;
 		}
@@ -124,8 +118,17 @@ char character_mode(const string_vector& strings) {
 // either "cat" or "tac". If the vector contains no mirrored strings,
 // returns an empty string.
 std::string longest_mirrored_string(const string_vector& strings) {
-	// TODO: implement this function, then delete this comment
-	return "";
+	std::string best = "";
+	for (size_t i = 0; i < strings.size() - 1; i++) {
+		for (size_t j = 0; j < strings.size() - 1; j++) {
+			if (is_mirrored(strings[i], strings[j])) {
+				if (strings[i].size() > best.length()) {
+					best = strings[i];
+				}
+			}
+		}
+	}
+	return best;
 }
 
 // Return a vector of length exactly three, containing the longest
@@ -136,6 +139,29 @@ std::string longest_mirrored_string(const string_vector& strings) {
 // vector does not contain a substring trio, return a vector
 // containing exactly three empty strings.
 string_vector longest_substring_trio(const string_vector& strings) {
-	// TODO: implement this function, then delete this comment
-	return string_vector();
+	int longest = 0;
+	string_vector trio;
+	trio.push_back("");
+	trio.push_back("");
+	trio.push_back("");
+	for (size_t i = 0; i < strings.size(); i++) {
+		for (size_t j = 0; j < strings.size(); j++) {
+			if (strings[j].size() <= strings[i].size() && strings[i] != strings[j]) {
+				for (size_t k = 0; k < strings.size(); k++) {
+					if (strings[k].size() <= strings[j].size() && strings[j] != strings[k]) {
+						if (is_substring(strings[j], strings[i]) && is_substring(strings[k], strings[j])) {
+							int trio_length = strings[i].length() + strings[j].length() + strings[k].length();
+							if (trio_length > longest) {
+								longest = trio_length;
+								trio[0] = strings[i];
+								trio[1] = strings[j];
+								trio[2] = strings[k];
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return trio;
 }
