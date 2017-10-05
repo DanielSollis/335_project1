@@ -2,6 +2,6 @@
 
 Group members:
 
-Ada Lovelace adalovelace@csu.fullerton.edu
+Daniel Sollis
 
-Charles Babbage charlesbab@csu.fullerton.edu
+Tyler Hatzenbuhler: thatzenbuhler@csu.fullerton.edu
