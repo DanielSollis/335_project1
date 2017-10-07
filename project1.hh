@@ -24,7 +24,7 @@ typedef std::vector<std::string> string_vector;
 bool load_words(string_vector& words, const std::string& path) {
 	words.clear();
 
-	std::ifstream text_input("../" + path);
+	std::ifstream text_input("../" + path); // IF RUNTIME ISSUE: TRY DELETING "../" ARGUMENT
 	if (!text_input) {
 		return false;
 	}
